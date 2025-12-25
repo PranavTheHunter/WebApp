@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Your Spot - Digital Forge</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0b0f14;
+            color: #c9d1d9;
+            overflow-x: hidden;
+        }
+        #tech-canvas {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        .font-tech { font-family: 'Space Grotesk', sans-serif; }
+        .glass-card { 
+            background-color: rgba(22, 27, 34, 0.7); 
+            backdrop-filter: blur(12px); 
+            border: 1px solid rgba(48, 54, 61, 0.8);
+        }
+        .text-pink { color: #e12590; }
+        .bg-pink { background-color: #e12590; }
+        
+        /* Aura Heading Animation */
+        .aura-text {
+            color: white;
+            animation: buildAura 2s ease-out forwards;
+        }
+        @keyframes buildAura {
+            0% { text-shadow: none; opacity: 0; transform: translateY(10px); }
+            100% { 
+                text-shadow: 0 0 10px #e12590, 0 0 20px #e12590; 
+                opacity: 1; transform: translateY(0); 
+            }
+        }
+
+        input, select {
+            background-color: rgba(13, 17, 23, 0.9) !important;
+            border: 1px solid #30363d !important;
+            transition: all 0.3s ease;
+            color: #f1f5f9 !important;
+        }
+        input:focus, select:focus {
+            border-color: #e12590 !important;
+            box-shadow: 0 0 10px rgba(225, 37, 144, 0.2);
+            outline: none;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen">
+    
+    <canvas id="tech-canvas"></canvas>
+
+    <header class="bg-transparent border-b border-dark/20 sticky top-0 z-50 backdrop-blur-md">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <img src="logo.png" alt="Logo" class="h-10 w-auto" onerror="this.src='https://via.placeholder.com/40x40/e12590/ffffff?text=DFP'">
+                <span class="text-2xl font-bold text-slate-100 font-tech tracking-tighter">Digital Forge</span>
+            </div>
+            <div class="flex items-center space-x-8">
+                <a href="index.html" class="text-slate-300 hover:text-pink transition font-medium">Home</a>
+                <a href="register.html" class="text-pink font-medium relative">Register <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-pink rounded-full"></span></a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-6 py-12 flex flex-col items-center">
+        <div class="w-full max-w-xl glass-card p-8 md:p-10 rounded-2xl shadow-2xl relative overflow-hidden">
+            
+            <h2 class="text-4xl font-bold text-center mb-2 font-tech aura-text uppercase tracking-tight">Initiate Connection</h2>
+            <p class="text-center text-slate-400 mb-8 font-medium">Lock in your spot for the next cohort. <br> <span class="text-pink/80">CS • IT • ENTC SQUAD</span></p>
+            
+            <form id="registration-form" class="space-y-6 relative z-10">
+                <div class="group">
+                    <label class="block text-xs font-bold uppercase tracking-widest text-slate-500 mb-2 group-focus-within:text-pink transition">Full Name</label>
+                    <input type="text" name="name" placeholder="E.g., Stephen Curry" required class="w-full px-4 py-3 rounded-lg">
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="group">
+                        <label class="block text-xs font-bold uppercase tracking-widest text-slate-500 mb-2 group-focus-within:text-pink transition">Email Address</label>
+                        <input type="email" name="email" placeholder="name@domain.com" required class="w-full px-4 py-3 rounded-lg">
+                    </div>
+                    <div class="group">
+                        <label class="block text-xs font-bold uppercase tracking-widest text-slate-500 mb-2 group-focus-within:text-pink transition">Phone Number</label>
+                        <input type="tel" name="phone" placeholder="10 Digit Number" required class="w-full px-4 py-3 rounded-lg">
+                    </div>
+                </div>
+
+                <div class="group">
+                    <label class="block text-xs font-bold uppercase tracking-widest text-slate-500 mb-2 group-focus-within:text-pink transition">Primary Track</label>
+                    <select name="track" required class="w-full px-4 py-3 rounded-lg appearance-none">
+                        <option value="" class="bg-[#0b0f14]">Choose your path...</option>
+                        <option value="Python Developer" class="bg-[#0b0f14]">Python Developer</option>
+                        <option value="Web Development" class="bg-[#0b0f14]">Web Development</option>
+                    </select>
+                </div>
+
+                <button type="submit" id="submit-btn" class="w-full py-4 bg-pink text-white font-bold rounded-lg font-tech uppercase tracking-widest hover:scale-[1.02] active:scale-95 transition-all duration-200 shadow-[0_0_20px_rgba(225,37,144,0.3)]">
+                    Verify & Join Forge
+                </button>
+            </form>
+
+            <div id="message-box" class="mt-6 text-center hidden p-4 rounded-lg font-bold text-sm border uppercase tracking-widest"></div>
+        </div>
+    </main>
+
+    <script>
+        // Particle Background 
+        const canvas = document.getElementById('tech-canvas');
+        const ctx = canvas.getContext('2d');
+        let particlesArray;
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        class Particle {
+            constructor(x, y, dx, dy, size) {
+                this.x = x; this.y = y; this.dx = dx; this.dy = dy; this.size = size;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(225, 37, 144, 0.3)';
+                ctx.fill();
+            }
+            update() {
+                if (this.x > canvas.width || this.x < 0) this.dx = -this.dx;
+                if (this.y > canvas.height || this.y < 0) this.dy = -this.dy;
+                this.x += this.dx; this.y += this.dy;
+                this.draw();
+            }
+        }
+        function init() {
+            particlesArray = [];
+            for (let i = 0; i < 60; i++) {
+                particlesArray.push(new Particle(Math.random()*canvas.width, Math.random()*canvas.height, (Math.random()-0.5)*1, (Math.random()-0.5)*1, Math.random()*2));
+            }
+        }
+        function animate() {
+            requestAnimationFrame(animate);
+            ctx.clearRect(0,0,canvas.width, canvas.height);
+            particlesArray.forEach(p => p.update());
+        }
+        init(); animate();
+        window.addEventListener('resize', () => { canvas.width = innerWidth; canvas.height = innerHeight; init(); });
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+
+        // 1. INITIALIZE EMAILJS
+        emailjs.init("LJt0qVsCNGNPWTCoQ");
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAyAABAqVxSn3nwIlygNVQwhn6BPNB6Vn8",
+            authDomain: "digital-forge-54a2c.firebaseapp.com",
+            projectId: "digital-forge-54a2c",
+            storageBucket: "digital-forge-54a2c.firebasestorage.app",
+            messagingSenderId: "354078514264",
+            appId: "1:354078514264:web:070d370a51bc3b318d7e2d",
+            measurementId: "G-5B4FLH7JY3"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+        let currentUser = null;
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) { currentUser = user; } 
+            else { signInAnonymously(auth); }
+        });
+
+        const form = document.getElementById('registration-form');
+        const msg = document.getElementById('message-box');
+        const btn = document.getElementById('submit-btn');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const name = form.name.value.trim();
+            const email = form.email.value.trim();
+            const phone = form.phone.value.trim();
+            const track = form.track.value;
+
+            if (!/^[0-9]{10}$/.test(phone)) { showMessage("PHONE MUST BE 10 DIGITS.", "error"); return; }
+            if (!currentUser) { showMessage("SYNCING WITH FORGE... TRY AGAIN.", "warning"); return; }
+
+            btn.disabled = true;
+            btn.innerText = "PROCESSING...";
+
+            try {
+                // A. SAVE TO FIREBASE
+                await addDoc(collection(db, "registrations"), {
+                    name, email, phone, track,
+                    timestamp: serverTimestamp(),
+                    userId: currentUser.uid
+                });
+
+                // B. TRIGGER EMAIL
+                await emailjs.send("service_8m1wcul", "template_rukv8on", {
+                    to_name: name,
+                    to_email: email,
+                    track_name: track,
+                    subject: "Welcome to the Forge - Next Steps Inside"
+                });
+
+                // C. SUCCESS MESSAGE AND REDIRECT LOGIC
+                showMessage("ACCESS GRANTED. CHECK YOUR EMAIL. REDIRECTING IN 5s...", "success");
+                form.reset();
+
+                // 5 Second Delay then Redirect
+                setTimeout(() => {
+                    window.location.href = "index.html";
+                }, 5000);
+
+            } catch (err) {
+                console.error(err);
+                showMessage("SYSTEM OVERLOAD. TRY AGAIN.", "error");
+                btn.disabled = false;
+                btn.innerText = "Verify & Join Forge";
+            }
+        });
+
+        function showMessage(text, type) {
+            msg.innerText = text;
+            msg.classList.remove('hidden');
+            msg.className = `mt-6 block p-4 rounded-lg border ${type === 'success' ? 'text-green-400 bg-green-900/20 border-green-500/50' : type === 'warning' ? 'text-yellow-500 bg-yellow-900/20 border-yellow-500/50' : 'text-red-400 bg-red-900/20 border-red-500/50'}`;
+        }
+    </script>
+</body>
+</html>
